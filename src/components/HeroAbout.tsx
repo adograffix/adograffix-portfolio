@@ -85,7 +85,7 @@ export function About() {
           >
             <div className="aspect-[4/5] bg-slate-100 rounded-3xl overflow-hidden shadow-2xl shadow-slate-200/50 group border border-slate-200/50">
               <img
-                src="/thumbnails/Cover/ado profile first.jpg"
+                src="thumbnails/Cover/ado profile first.jpg"
                 alt="Ado - Graphic Designer"
                 referrerPolicy="no-referrer"
                 loading="lazy"
