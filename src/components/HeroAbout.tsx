@@ -1,4 +1,5 @@
-import { motion } from 'motion/react';
+import { useState, useEffect } from 'react';
+import { motion, AnimatePresence } from 'motion/react';
 import { ArrowRight, Download } from 'lucide-react';
 
 export function Hero() {
@@ -69,13 +70,27 @@ export function Hero() {
 
 export function About() {
   const skills = ['Graphic Design', 'Print Design', 'Photography', 'Photo Editing', 'Branding', 'Visual Storytelling', 'Adobe CC'];
+  
+  const coverImages = [
+    'thumbnails/Cover/ado profile first.jpg',
+    'thumbnails/Cover/ado profile.jpg'
+  ];
+
+  const [currentImage, setCurrentImage] = useState(0);
+
+  useEffect(() => {
+    const timer = setInterval(() => {
+      setCurrentImage((prev) => (prev + 1) % coverImages.length);
+    }, 6000); // Change image every 6 seconds
+    return () => clearInterval(timer);
+  }, [coverImages.length]);
 
   return (
     <section id="about" className="py-24 md:py-32 relative">
       <div className="max-w-7xl mx-auto px-6">
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
           
-          {/* Image */}
+          {/* Image Slider */}
           <motion.div
             initial={{ opacity: 0, x: -50 }}
             whileInView={{ opacity: 1, x: 0 }}
@@ -83,15 +98,34 @@ export function About() {
             transition={{ duration: 0.8 }}
             className="relative"
           >
-            <div className="aspect-[4/5] bg-slate-100 rounded-3xl overflow-hidden shadow-2xl shadow-slate-200/50 group border border-slate-200/50">
-              <img
-                src="thumbnails/Cover/ado profile first.jpg"
-                alt="Ado - Graphic Designer"
-                referrerPolicy="no-referrer"
-                loading="lazy"
-                decoding="async"
-                className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
-              />
+            <div className="aspect-[4/5] bg-slate-100 rounded-3xl overflow-hidden shadow-2xl shadow-slate-200/50 border border-slate-200/50 relative">
+              <AnimatePresence mode="wait">
+                <motion.img
+                  key={currentImage}
+                  src={coverImages[currentImage]}
+                  alt="Ado Graffix Showcase"
+                  initial={{ opacity: 0, scale: 1.1 }}
+                  animate={{ opacity: 1, scale: 1 }}
+                  exit={{ opacity: 0, scale: 0.95 }}
+                  transition={{ duration: 1.2, ease: "easeInOut" }}
+                  referrerPolicy="no-referrer"
+                  loading="lazy"
+                  decoding="async"
+                  className="absolute inset-0 w-full h-full object-cover"
+                />
+              </AnimatePresence>
+              
+              {/* Slider Dots */}
+              <div className="absolute bottom-6 left-1/2 -translate-x-1/2 flex gap-2 z-10">
+                {coverImages.map((_, i) => (
+                  <div 
+                    key={i}
+                    className={`h-1.5 rounded-full transition-all duration-300 ${
+                      i === currentImage ? 'w-8 bg-white' : 'w-2 bg-white/50'
+                    }`}
+                  />
+                ))}
+              </div>
             </div>
             {/* Decoration */}
             <div className="absolute -bottom-6 -right-6 w-32 h-32 rounded-3xl border-2 border-indigo-100 -z-10" />
