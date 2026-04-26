@@ -27,18 +27,18 @@ const services = [
 const testimonials = [
   {
     text: "Ado Graffix entirely transformed our brand's trajectory. The new visual identity is not just beautiful; it strictly aligns with our strategic goals. Highly recommended.",
-    author: "Sarah Jenkins",
-    role: "CEO, Aura Fintech",
+    author: "Prince Linus Adoyi",
+    role: "CEO, HMM Academy",
   },
   {
     text: "Working with Ado Graffix was a breath of fresh air. The attention to detail, precision, and visual storytelling made our new campaign an instant hit.",
-    author: "Marcus Chen",
-    role: "Marketing Lead, Flow",
+    author: "Sale Isreal Edo",
+    role: "Manager, IGAICTLTD",
   },
   {
     text: "True professional. Ado Graffix captured the exact mood we were looking for with our festival photography and printing. The execution was flawless across all mediums.",
-    author: "Elena Rodriguez",
-    role: "Director, Neon Drift",
+    author: "Haruna Jephthah Yohanna",
+    role: "CEO, Vinciware",
   },
 ];
 
