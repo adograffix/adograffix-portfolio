@@ -2,7 +2,7 @@ import { useState } from 'react';
 import { motion, AnimatePresence } from 'motion/react';
 import { X, ExternalLink } from 'lucide-react';
 
-const projects = [
+const manualProjects = [
   // Branding
   { id: 1, title: 'Chin Chin & Peanuts', category: 'Branding', image: 'thumbnails/Branding/chin chinAND PEANUTS.jpg', fullImage: 'images/Branding/chin chinAND PEANUTS.jpg', description: 'Complete branding and packaging design.', year: '2024', role: 'Lead Designer' },
   { id: 2, title: 'Lizzy Collection', category: 'Branding', image: 'thumbnails/Branding/lizzy.jpg', fullImage: 'images/Branding/lizzy.jpg', description: 'Elegant brand identity design.', year: '2023', role: 'Brand Designer' },
@@ -176,7 +176,34 @@ const projects = [
   { id: 165, title: 'Pccc', category: 'Graphic Design', image: 'thumbnails/graphic design/pccc.jpeg', fullImage: 'images/graphic design/pccc.jpeg', description: 'Professional graphic design work.', year: '2024', role: 'Designer' },
 ];
 
-const categories = ['All', 'Graphic Design', 'Branding', 'Photography', 'Print'];
+// Automatically load images from the "Recent Work" folder
+const recentWorkImages = import.meta.glob('/public/images/Recent Work/*.{png,jpg,jpeg,webp}', { eager: true });
+
+const dynamicRecentWork = Object.keys(recentWorkImages).map((path, index) => {
+  const filename = path.split('/').pop() || '';
+  const title = filename.split('.')[0]
+    .replace(/[_-]/g, ' ')
+    .replace(/\b\w/g, l => l.toUpperCase());
+  
+  // Construct the stable public path
+  // Using the filename directly from the path key to ensure we point to the correct file in public/images/Recent Work/
+  const browserUrl = `images/Recent Work/${filename}`;
+
+  return {
+    id: `recent-${index}`,
+    title: title,
+    category: 'Recent Work',
+    image: browserUrl,
+    fullImage: browserUrl,
+    description: `Recent work: ${title}`,
+    year: new Date().getFullYear().toString(),
+    role: 'Designer'
+  };
+});
+
+const projects = [...dynamicRecentWork, ...manualProjects];
+
+const categories = ['All', 'Recent Work', 'Graphic Design', 'Branding', 'Photography', 'Print'];
 
 export function Portfolio() {
   const [filter, setFilter] = useState('All');
